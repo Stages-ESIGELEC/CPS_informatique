@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:3306
--- Généré le : mer. 19 juil. 2023 à 01:18
+-- Généré le : jeu. 20 juil. 2023 à 16:18
 -- Version du serveur : 8.0.33-0ubuntu0.22.04.2
 -- Version de PHP : 8.1.2-1ubuntu2.13
 
@@ -32,9 +32,9 @@ CREATE TABLE `articles` (
   `boutique_id` int NOT NULL,
   `article_nom` varchar(50) NOT NULL,
   `article_categorie` int NOT NULL,
-  `artcle_sous_categorie` int NOT NULL,
+  `article_sous_categorie` int NOT NULL,
   `article_prix` int NOT NULL,
-  `article_date_dépôt` datetime NOT NULL,
+  `article_date_depot` datetime NOT NULL,
   `article_quantité` int NOT NULL,
   `photo` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -43,7 +43,7 @@ CREATE TABLE `articles` (
 -- Déchargement des données de la table `articles`
 --
 
-INSERT INTO `articles` (`id_article`, `boutique_id`, `article_nom`, `article_categorie`, `artcle_sous_categorie`, `article_prix`, `article_date_dépôt`, `article_quantité`, `photo`) VALUES
+INSERT INTO `articles` (`id_article`, `boutique_id`, `article_nom`, `article_categorie`, `article_sous_categorie`, `article_prix`, `article_date_depot`, `article_quantité`, `photo`) VALUES
 (3, 1, 'chemise-longue', 1, 2, 5000, '2023-07-18 10:31:18', 4, '/home/sanoussi/Téléchargements/chemise-longue.jpeg'),
 (4, 2, 'boots', 1, 1, 3500, '2023-07-18 10:31:18', 3, '/home/sanoussi/Téléchargements/b.jpeg'),
 (5, 2, 'alls', 2, 2, 6000, '2023-07-18 10:31:18', 7, '/home/sanoussi/Téléchargements/chemise-longue.jpeg');
@@ -101,12 +101,21 @@ INSERT INTO `categorie_article` (`id`, `libelle_categorie`) VALUES
 
 CREATE TABLE `commandes` (
   `commande_id` int NOT NULL,
+  `utilisateur_id` int NOT NULL,
   `id_article` int NOT NULL,
   `boutique_id` int NOT NULL,
   `quantite` int NOT NULL,
   `prix` int NOT NULL,
   `date_commande` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `commandes`
+--
+
+INSERT INTO `commandes` (`commande_id`, `utilisateur_id`, `id_article`, `boutique_id`, `quantite`, `prix`, `date_commande`) VALUES
+(1, 1, 4, 1, 1, 3500, '2023-07-20 12:11:46'),
+(2, 2, 3, 1, 2, 10000, '2023-07-20 12:53:27');
 
 -- --------------------------------------------------------
 
@@ -132,6 +141,7 @@ CREATE TABLE `demandes` (
   `demande_id` int NOT NULL,
   `utilisateur_id` int NOT NULL,
   `type_demande` int NOT NULL,
+  `demande` varchar(16) NOT NULL,
   `demande_date` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -145,8 +155,16 @@ CREATE TABLE `membres` (
   `id_membre` int NOT NULL,
   `boutique_id` int NOT NULL,
   `mail` varchar(100) NOT NULL,
-  `password` varchar(16) NOT NULL
+  `password` varchar(16) NOT NULL,
+  `autorisations` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `membres`
+--
+
+INSERT INTO `membres` (`id_membre`, `boutique_id`, `mail`, `password`, `autorisations`) VALUES
+(1, 2, 'papou@gmoil.com', 'poulo', 'supprimer');
 
 -- --------------------------------------------------------
 
@@ -188,8 +206,9 @@ INSERT INTO `sous_categorie` (`id`, `libelle_sous_categorie`) VALUES
 
 CREATE TABLE `utilisateurs` (
   `utilisateur_id` int NOT NULL,
-  `utiilisateur_mail` varchar(30) NOT NULL,
+  `utilisateur_mail` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `utilisateur_pseudo` varchar(30) NOT NULL,
+  `password` varchar(16) NOT NULL,
   `utilisateur_naissance` date NOT NULL,
   `utilisateur_type` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -198,10 +217,10 @@ CREATE TABLE `utilisateurs` (
 -- Déchargement des données de la table `utilisateurs`
 --
 
-INSERT INTO `utilisateurs` (`utilisateur_id`, `utiilisateur_mail`, `utilisateur_pseudo`, `utilisateur_naissance`, `utilisateur_type`) VALUES
-(1, 'sanoumalick24@gmail.com', 'rising-sun', '2012-04-01', 'membre'),
-(2, 'gerant@gmail.com', 'sun', '2023-07-02', 'gerant'),
-(3, 'kenkaneki@gmail.com', 'ken', '2023-07-17', 'gerant');
+INSERT INTO `utilisateurs` (`utilisateur_id`, `utilisateur_mail`, `utilisateur_pseudo`, `password`, `utilisateur_naissance`, `utilisateur_type`) VALUES
+(1, 'sanoumalick24@gmail.com', 'rising-sun', 'nouveau', '2012-04-01', 'membre'),
+(2, 'gerant@gmail.com', 'sun', 'ger345', '2023-07-02', 'gerant'),
+(3, 'kenkaneki@gmail.com', 'ken', 'ken567', '2023-07-17', 'gerant');
 
 --
 -- Index pour les tables déchargées
@@ -213,7 +232,7 @@ INSERT INTO `utilisateurs` (`utilisateur_id`, `utiilisateur_mail`, `utilisateur_
 ALTER TABLE `articles`
   ADD PRIMARY KEY (`id_article`),
   ADD KEY `boutique_id` (`boutique_id`),
-  ADD KEY `artcle_specificite` (`artcle_sous_categorie`),
+  ADD KEY `artcle_specificite` (`article_sous_categorie`),
   ADD KEY `article_categorie` (`article_categorie`);
 
 --
@@ -236,7 +255,8 @@ ALTER TABLE `categorie_article`
 ALTER TABLE `commandes`
   ADD PRIMARY KEY (`commande_id`),
   ADD KEY `commandes_ibfk_1` (`id_article`),
-  ADD KEY `commandes_ibfk_2` (`boutique_id`);
+  ADD KEY `commandes_ibfk_2` (`boutique_id`),
+  ADD KEY `utilisateur_id` (`utilisateur_id`);
 
 --
 -- Index pour la table `commentaires`
@@ -308,7 +328,7 @@ ALTER TABLE `categorie_article`
 -- AUTO_INCREMENT pour la table `commandes`
 --
 ALTER TABLE `commandes`
-  MODIFY `commande_id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `commande_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT pour la table `commentaires`
@@ -326,7 +346,7 @@ ALTER TABLE `demandes`
 -- AUTO_INCREMENT pour la table `membres`
 --
 ALTER TABLE `membres`
-  MODIFY `id_membre` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id_membre` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT pour la table `panier`
@@ -349,7 +369,7 @@ ALTER TABLE `utilisateurs`
 --
 ALTER TABLE `articles`
   ADD CONSTRAINT `articles_ibfk_1` FOREIGN KEY (`boutique_id`) REFERENCES `boutiques` (`id_boutique`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `articles_ibfk_2` FOREIGN KEY (`artcle_sous_categorie`) REFERENCES `sous_categorie` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `articles_ibfk_2` FOREIGN KEY (`article_sous_categorie`) REFERENCES `sous_categorie` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   ADD CONSTRAINT `articles_ibfk_3` FOREIGN KEY (`article_categorie`) REFERENCES `categorie_article` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
@@ -363,7 +383,8 @@ ALTER TABLE `boutiques`
 --
 ALTER TABLE `commandes`
   ADD CONSTRAINT `commandes_ibfk_1` FOREIGN KEY (`id_article`) REFERENCES `articles` (`id_article`) ON UPDATE RESTRICT,
-  ADD CONSTRAINT `commandes_ibfk_2` FOREIGN KEY (`boutique_id`) REFERENCES `boutiques` (`id_boutique`) ON UPDATE RESTRICT;
+  ADD CONSTRAINT `commandes_ibfk_2` FOREIGN KEY (`boutique_id`) REFERENCES `boutiques` (`id_boutique`) ON UPDATE RESTRICT,
+  ADD CONSTRAINT `commandes_ibfk_3` FOREIGN KEY (`utilisateur_id`) REFERENCES `utilisateurs` (`utilisateur_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Contraintes pour la table `commentaires`
