@@ -14,6 +14,16 @@
     <!-- Core theme CSS (includes Bootstrap)-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
     <link href="css/styles.css" rel="stylesheet" />
+    <style>
+        /* Style pour encadrer le texte */
+        .cadre1 {
+            border: 1px solid white;
+            /* Bordure de 1 pixel de large en noir */
+            width: 100%;
+            height: 50%;
+            /* Marge intérieure de 10 pixels pour espacer le texte du cadre */
+                }
+    </style>
 
 </head>
 
@@ -44,13 +54,14 @@
     <header class="bg-dark py-5">
             <div class="container-fluid">
                 <!-- Example Code -->
-                <div class="cadre">
+                <div class="cadre1">
+                    <div class="container-fluid">
                     <form class="row align-items-center">
 
                         <div class="col-sm-2">
                             <input type="text" class="form-control" id="specificSizeInputName"
                                 placeholder="Product's name" />
-                            <label class="visually-hidden" for="specificSizeSelect"></label><br />
+                            <br>
                             <select class="form-select" id="specificSizeSelect">
                                 <option selected="">Type</option>
                                 <optgroup label="Vetement">
@@ -76,11 +87,55 @@
                         <div class="col-sm-2">
                             <input type="number" class="form-control" id="specificSizeInputGroupUsername"
                                 placeholder="Price" />
-                        </div>
+                                <br>
+                                <input type="number" class="form-control" id="specificSizeInputGroupUsername"
+                                placeholder="Number's article" />
 
-                        <div class="col-auto" >
+                        </div>
+                        <div class="col" >
+                            <br>
                             <input type="file" class="form-control" id="inputGroupFile04"
                                 aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                                <br>
+                                <div class="card border-white bg-transparent border-radius">
+                                    <div class="card-body"> 
+                                        <div class="text-center"> 
+                                        <label class="form-label h5 text center" style="color: white;" for="typeEmailX">Deposite date</label>  
+                                        </div>     <br>
+                                <div class="form-outline form-white mb-1">
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="col-sm-0">
+                                              <input type="text" class="form-control" placeholder="Jour" aria-label="State">
+                                            </div>
+                                          </div>  
+                                        <div class="col">
+                                          <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+                                            <option selected>Mois</option>
+                                            <option value="1">Janvier</option>
+                                            <option value="2">Fevrier</option>
+                                            <option value="3">Mars</option>
+                                            <option value="4">Avril</option>
+                                            <option value="5">Mai</option>
+                                            <option value="6">Juin</option>
+                                            <option value="7">Juillet</option>
+                                            <option value="8">Aout</option>
+                                            <option value="9">Septembre</option>
+                                            <option value="10">Octobre</option>
+                                            <option value="11">Novembre</option>
+                                            <option value="12">Decembre</option>
+                                          </select>
+                                        </div>
+                                        <div class="col">
+                                          <div class="col-sm-0">
+                                            <input type="text" class="form-control" placeholder="Annee" aria-label="State">
+                                          </div>      
+                                        </div>
+                                      </div>
+                                    </div>
+                            </div>
+                            </div>
+                            <br> 
                         </div>
                         <div class="col-auto">
                             <button type="submit" class="btn btn-primary">Submit</button>
@@ -88,6 +143,8 @@
 
 
                     </form>
+                </div>
+                </div>
                 </div>
                 <!-- End Example Code -->
             </div>
