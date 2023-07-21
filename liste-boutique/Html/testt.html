@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Tableau avec coins arrondis</title>
+    <style>
+        table {
+            border-collapse: collapse;
+           
+            margin: 20px auto;
+        }
+
+        th,
+        td {
+            border: 1px solid #180303;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #180303;
+        }
+
+        /* Ajouter des coins arrondis à toutes les cellules du tableau */
+        table {
+            border-radius: 300px;
+            overflow: hidden;
+            /* Assurez-vous de masquer le contenu qui dépasserait des coins arrondis */
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Tableau avec coins arrondis</h1>
+
+    <table width="90%">
+        <tr>
+            <th>Titre 1</th>
+            <th>Titre 2</th>
+            <th>Titre 3</th>
+        </tr>
+        <tr>
+            <td>Donnée 1</td>
+            <td>Donnée 2</td>
+            <td>Donnée 3</td>
+        </tr>
+        <tr>
+            <td>Donnée 4</td>
+            <td>Donnée 5</td>
+            <td>Donnée 6</td>
+        </tr>
+    </table>
+
+</body>
+
+</html>
