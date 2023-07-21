@@ -13,5 +13,5 @@ SELECT commandes.quantite, commandes.prix, commandes.date_commande, utilisateurs
 --US52: modification du profil membre---
 UPDATE membres SET mail = '?', password ='?', autorisations = '?' WHERE id_membre = '?';
 
---US45:cosulatation de l'historique des commandes:boutiques--
+--US45:consulatation de l'historique des commandes:boutiques--
 SELECT commandes.quantite, commandes.prix, commandes.date_commande, boutiques.boutique_nom FROM commandes INNER JOIN boutiques ON boutique_id = id_boutique WHERE boutiques.id_boutique = ?;
