@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:3306
--- Généré le : jeu. 20 juil. 2023 à 16:18
+-- Généré le : lun. 24 juil. 2023 à 12:52
 -- Version du serveur : 8.0.33-0ubuntu0.22.04.2
 -- Version de PHP : 8.1.2-1ubuntu2.13
 
@@ -36,17 +36,19 @@ CREATE TABLE `articles` (
   `article_prix` int NOT NULL,
   `article_date_depot` datetime NOT NULL,
   `article_quantité` int NOT NULL,
-  `photo` varchar(200) NOT NULL
+  `photo` varchar(200) NOT NULL,
+  `description` varchar(200) NOT NULL,
+  `statut` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Déchargement des données de la table `articles`
 --
 
-INSERT INTO `articles` (`id_article`, `boutique_id`, `article_nom`, `article_categorie`, `article_sous_categorie`, `article_prix`, `article_date_depot`, `article_quantité`, `photo`) VALUES
-(3, 1, 'chemise-longue', 1, 2, 5000, '2023-07-18 10:31:18', 4, '/home/sanoussi/Téléchargements/chemise-longue.jpeg'),
-(4, 2, 'boots', 1, 1, 3500, '2023-07-18 10:31:18', 3, '/home/sanoussi/Téléchargements/b.jpeg'),
-(5, 2, 'alls', 2, 2, 6000, '2023-07-18 10:31:18', 7, '/home/sanoussi/Téléchargements/chemise-longue.jpeg');
+INSERT INTO `articles` (`id_article`, `boutique_id`, `article_nom`, `article_categorie`, `article_sous_categorie`, `article_prix`, `article_date_depot`, `article_quantité`, `photo`, `description`, `statut`) VALUES
+(3, 1, 'chemise-longue', 1, 2, 5000, '2023-07-18 10:31:18', 4, '/home/sanoussi/Téléchargements/chemise-longue.jpeg', '', ''),
+(4, 2, 'boots', 1, 1, 3500, '2023-07-18 10:31:18', 3, '/home/sanoussi/Téléchargements/b.jpeg', '', ''),
+(5, 2, 'alls', 2, 2, 6000, '2023-07-18 10:31:18', 7, '/home/sanoussi/Téléchargements/chemise-longue.jpeg', '', '');
 
 -- --------------------------------------------------------
 
@@ -106,16 +108,17 @@ CREATE TABLE `commandes` (
   `boutique_id` int NOT NULL,
   `quantite` int NOT NULL,
   `prix` int NOT NULL,
-  `date_commande` datetime NOT NULL
+  `date_commande` datetime NOT NULL,
+  `statut` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Déchargement des données de la table `commandes`
 --
 
-INSERT INTO `commandes` (`commande_id`, `utilisateur_id`, `id_article`, `boutique_id`, `quantite`, `prix`, `date_commande`) VALUES
-(1, 1, 4, 1, 1, 3500, '2023-07-20 12:11:46'),
-(2, 2, 3, 1, 2, 10000, '2023-07-20 12:53:27');
+INSERT INTO `commandes` (`commande_id`, `utilisateur_id`, `id_article`, `boutique_id`, `quantite`, `prix`, `date_commande`, `statut`) VALUES
+(1, 1, 4, 1, 1, 3500, '2023-07-20 12:11:46', ''),
+(2, 2, 3, 1, 2, 10000, '2023-07-20 12:53:27', '');
 
 -- --------------------------------------------------------
 
@@ -218,9 +221,10 @@ CREATE TABLE `utilisateurs` (
 --
 
 INSERT INTO `utilisateurs` (`utilisateur_id`, `utilisateur_mail`, `utilisateur_pseudo`, `password`, `utilisateur_naissance`, `utilisateur_type`) VALUES
-(1, 'sanoumalick24@gmail.com', 'rising-sun', 'nouveau', '2012-04-01', 'membre'),
+(1, 'sanoumalick24@gmail.com', 'rising-sun', '?', '2012-04-01', 'membre'),
 (2, 'gerant@gmail.com', 'sun', 'ger345', '2023-07-02', 'gerant'),
-(3, 'kenkaneki@gmail.com', 'ken', 'ken567', '2023-07-17', 'gerant');
+(3, 'kenkaneki@gmail.com', 'ken', 'ken567', '2023-07-17', 'gerant'),
+(4, 'bouba@gmail.com', 'solo', 'zoublou', '2013-06-18', '');
 
 --
 -- Index pour les tables déchargées
@@ -358,7 +362,7 @@ ALTER TABLE `panier`
 -- AUTO_INCREMENT pour la table `utilisateurs`
 --
 ALTER TABLE `utilisateurs`
-  MODIFY `utilisateur_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `utilisateur_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Contraintes pour les tables déchargées
