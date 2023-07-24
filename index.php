@@ -88,18 +88,24 @@
 
             <!-- Example Code -->
             <div class="cadre">
-                <form class="row align-items-center">
+                <form class="row align-items-center" action="<?= !empty($_GET['id_article']) ? "modifArticle.php": "ajoutArticle.php" ?>" method="post" enctype="multipart/form-data">
 
-                    <div class="col-auto">
-                        <input type="file" class="form-control" id="inputGroupFile04"
-                            aria-describedby="inputGroupFileAddon04" aria-label="Upload">
-                    </div>
+                    
                     <div class="col-sm-2">
                         <label class="visually-hidden" for="specificSizeInputName">Name</label>
-                        <input type="text" class="form-control" id="specificSizeInputName"
+                        <input  value="<?= !empty($_GET['id_article']) ? $articles['article_nom'] : "" ?>" type="text" class="form-control" name="article_nom" id="article_nom"
+                            placeholder="Product's name" />
+                            <input  value="<?= !empty($_GET['id_article']) ? $articles['id_article'] : "" ?>" type="hidden" name="id_article" id="id_article"
                             placeholder="Product's name" />
                         <label class="visually-hidden" for="specificSizeSelect">Preference</label><br />
+                        <?php
+                            if(!empty($_GET['id']))
+                            {
+                                $categorie = getCategorie($_GET['id']);
+                            }
+                        ?>    
                         <select class="form-select" id="specificSizeSelect">
+
                             <option selected="">Type</option>
                             <optgroup label="Vetement">
                                 <option value="1">Chemise</option>
@@ -114,7 +120,7 @@
                         </select>
                     </div>
                     <div class="col-sm-3">
-                        <label class="visually-hidden" for="specificSizeInputGroupUsername">Username</label>
+                        <label class="visually-hidden" for="description">Username</label>
                         <div class="input-group">
                             <div class="col-auto">
                                 <textarea class="form-control" id="exampleFormControlTextarea1"
@@ -123,12 +129,27 @@
                         </div>
                     </div>
                     <div class="col-sm-2">
-                        <input type="number" class="form-control" id="specificSizeInputGroupUsername"
+                        <input  value="<?= !empty($_GET['id_article']) ? $articles['article_prix']: "" ?>" type="number" class="form-control" id="article_prix"
                             placeholder="Price" />
+                    </div>
+                    <div class="col-auto">
+                        
+                        <input type="file" class="form-control" id="inputGroupFile04"
+                            aria-describedby="inputGroupFileAddon04" aria-label="Upload">
                     </div>
                     <div class="col-sm-10"></div>
                     <div class="col-auto">
                         <button type="submit" class="btn btn-primary">Submit</button>
+                        <?php 
+                        if (!empty($_SESSION['message']['text']))
+                        {
+                        ?>
+                            <div class="alert <?= $_SESSION['message']['type'] ?>">
+                            <?= $_SESSION['message']['type'] ?>
+                        </div>
+                        <?php
+                        }
+                        ?>
                     </div>
 
 
